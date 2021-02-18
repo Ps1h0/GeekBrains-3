@@ -1,5 +1,9 @@
 public class Apple extends Fruit{
 
-    private final double weight = 1;
+    private static final double APPLE_WEIGHT = 1;
 
+
+    protected Apple() {
+        super(APPLE_WEIGHT);
+    }
 }

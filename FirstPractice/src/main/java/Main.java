@@ -15,8 +15,8 @@ public class Main {
         ArrayList<Double> nums1Arr = nums1.toArrayList();
         ArrayList<String> strArr = str.toArrayList();
 
-        Box<Fruit> boxA = new Box<>();
-        Box<Fruit> boxB = new Box<>();
+        Box<Apple> boxA = new Box<>();
+        Box<Orange> boxB = new Box<>();
         Apple a = new Apple();
         Apple b = new Apple();
         Apple c = new Apple();
@@ -38,7 +38,7 @@ public class Main {
         System.out.println(weightA + " " + weightB);
         System.out.println(boxA.compare(boxB));
 
-        Box<Fruit> boxC = new Box<>();
+        Box<Apple> boxC = new Box<>();
         boxA.shiftFruits(boxC);
         Double weightC = boxC.getWeight();
         System.out.println(weightC);
