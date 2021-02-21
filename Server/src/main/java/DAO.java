@@ -4,8 +4,7 @@ public class DAO {
 
     private static Connection connection;
 
-    public void addUser(String nickName) throws SQLException, ClassNotFoundException {
-        getConnection();
+    public void addUser(String nickName) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement("insert into users(Nickname) values('" + nickName + "')");
         preparedStatement.executeUpdate();
     }
