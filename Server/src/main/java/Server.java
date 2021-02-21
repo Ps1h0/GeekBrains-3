@@ -84,6 +84,13 @@ public class Server {
         }
     }
 
+    public boolean isNickBusy(String newNick){
+        for (ClientHandler client : clients){
+            if(client.getNickName().equals(newNick)) return true;
+        }
+        return false;
+    }
+
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         int port = -1;
         if (args != null && args.length ==1){

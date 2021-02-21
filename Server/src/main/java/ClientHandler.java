@@ -47,7 +47,10 @@ public class ClientHandler implements Runnable{
                     }
                     if (message.startsWith("/changenick ")){
                         String newNick = message.substring(message.indexOf(" ") + 1);
-                        server.changeNick(this, newNick);
+                        if(!server.isNickBusy(newNick))
+                            server.changeNick(this, newNick);
+                        else
+                            sendMessage("Nickname is busy");
                     }
                     if (message.startsWith("/w ")){
                         String[] tokens = message.split("\\s");
@@ -71,6 +74,5 @@ public class ClientHandler implements Runnable{
         LocalTime time = LocalTime.now();
         out.writeUTF("[" + time + "] " + message);
         out.flush();
-
     }
 }
