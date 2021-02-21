@@ -5,18 +5,21 @@ public class DAO {
     private static Connection connection;
 
     public void addUser(String nickName) throws SQLException{
-        PreparedStatement preparedStatement = connection.prepareStatement("insert into users(Nickname) values('" + nickName + "')");
-        preparedStatement.executeUpdate();
+        Statement statement = connection.createStatement();
+        statement.executeUpdate("insert into users(Nickname) values('" + nickName + "')");
+        statement.close();
     }
 
     public void deleteUser(String nickName) throws SQLException, ClassNotFoundException {
-        PreparedStatement preparedStatement = connection.prepareStatement("delete from users where Nickname = '" + nickName + "'");
-        preparedStatement.executeUpdate();
+        Statement statement = connection.createStatement();
+        statement.executeUpdate("delete from users where Nickname = '" + nickName + "'");
+        statement.close();
     }
 
     public void updateUser(String oldNickname, String newNickname) throws SQLException, ClassNotFoundException {
-        PreparedStatement preparedStatement = connection.prepareStatement("update users set Nickname = '" + newNickname + "' where Nickname = '" + oldNickname + "'");
-        preparedStatement.executeUpdate();
+        Statement statement = connection.createStatement();
+        statement.executeUpdate("update users set Nickname = '" + newNickname + "' where Nickname = '" + oldNickname + "'");
+        statement.close();
     }
 
     public void getConnection() {
@@ -24,6 +27,14 @@ public class DAO {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:Server/database.db");
         } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void closeConnection(){
+        try {
+            connection.close();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

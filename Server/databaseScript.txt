@@ -1,0 +1,6 @@
+create table users
+(
+    UserID   integer not null
+        primary key autoincrement,
+    Nickname text    not null
+);

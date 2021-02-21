@@ -27,6 +27,7 @@ public class Server {
         } catch (Exception e){
             System.err.println("Server was broken");
         }
+        dataBaseService.closeConnection();
     }
 
     public void addClient(ClientHandler clientHandler) throws SQLException, ClassNotFoundException {
