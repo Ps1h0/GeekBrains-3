@@ -12,7 +12,6 @@ public class Server {
 
 
     public Server(int port){
-        dataBaseService.getConnection();
         clients = new ConcurrentLinkedDeque<>();
         try (ServerSocket server = new ServerSocket(port)) {
             System.out.println("[DEBUG] server starter on port: " + port);
@@ -25,9 +24,7 @@ public class Server {
             }
         } catch (IOException e) {
             System.err.println("Server was broken");
-            dataBaseService.closeConnection();
         }
-        dataBaseService.closeConnection();
     }
 
     public void addClient(ClientHandler clientHandler){
