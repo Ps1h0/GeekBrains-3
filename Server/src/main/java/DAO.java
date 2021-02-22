@@ -10,7 +10,7 @@ public class DAO {
             ps.setString(1, nickName);
             ps.executeUpdate();
         } catch (SQLException e) {
-            closeConnection();
+            e.printStackTrace();
         }
     }
 
@@ -20,7 +20,7 @@ public class DAO {
             ps.setString(1, nickName);
             ps.executeUpdate();
         } catch (SQLException e){
-            closeConnection();
+            e.printStackTrace();
         }
     }
 
@@ -31,7 +31,7 @@ public class DAO {
             ps.setString(2, oldNickname);
             ps.executeUpdate();
         } catch (SQLException e){
-            closeConnection();
+            e.printStackTrace();
         }
     }
 
@@ -40,7 +40,7 @@ public class DAO {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:Server/database.db");
         } catch (ClassNotFoundException | SQLException e) {
-            closeConnection();
+            e.printStackTrace();
         }
         return connection;
     }
