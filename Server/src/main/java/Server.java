@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
