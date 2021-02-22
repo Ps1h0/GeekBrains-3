@@ -24,13 +24,14 @@ public class Server {
                 addClient(handler);
                 new Thread(handler).start();
             }
-        } catch (Exception e){
+        } catch (IOException e) {
             System.err.println("Server was broken");
+            dataBaseService.closeConnection();
         }
         dataBaseService.closeConnection();
     }
 
-    public void addClient(ClientHandler clientHandler) throws SQLException, ClassNotFoundException {
+    public void addClient(ClientHandler clientHandler){
         clients.add(clientHandler);
         String name = clientHandler.getNickName();
         dataBaseService.addUser(name);
@@ -40,11 +41,7 @@ public class Server {
     public void removeClient(ClientHandler clientHandler){
         clients.remove(clientHandler);
         String name = clientHandler.getNickName();
-        try {
-            dataBaseService.deleteUser(name);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        dataBaseService.deleteUser(name);
         System.out.println("[DEBUG] client removed from broadcast queue");
     }
 
@@ -75,11 +72,7 @@ public class Server {
         for(ClientHandler client : clients){
             if (client.getNickName().equals(clientHandler.getNickName())){
                 broadcastMessage(clientHandler.getNickName() + " changed nickname to " + newNick);
-                try {
-                    dataBaseService.updateUser(clientHandler.getNickName(), newNick);
-                } catch (SQLException | ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
+                dataBaseService.updateUser(clientHandler.getNickName(), newNick);
                 client.setNickName(newNick);
             }
         }
