@@ -5,34 +5,28 @@ public class DAO {
     private static Connection connection;
 
     public void addUser(String nickName){
-        try {
-            PreparedStatement ps = connection.prepareStatement("insert into users(Nickname) values(?)");
+        try(PreparedStatement ps = connection.prepareStatement("insert into users(Nickname) values(?)")) {
             ps.setString(1, nickName);
             ps.executeUpdate();
-            ps.close();
         } catch (SQLException e) {
             closeConnection();
         }
     }
 
     public void deleteUser(String nickName) {
-        try {
-            PreparedStatement ps = connection.prepareStatement("delete from users where Nickname = ?");
+        try (PreparedStatement ps = connection.prepareStatement("delete from users where Nickname = ?")) {
             ps.setString(1, nickName);
             ps.executeUpdate();
-            ps.close();
         } catch (SQLException e){
             closeConnection();
         }
     }
 
     public void updateUser(String oldNickname, String newNickname) {
-        try {
-            PreparedStatement ps = connection.prepareStatement("update users set Nickname = ? where Nickname = ?");
+        try(PreparedStatement ps = connection.prepareStatement("update users set Nickname = ? where Nickname = ?")) {
             ps.setString(1, newNickname);
             ps.setString(2, oldNickname);
             ps.executeUpdate();
-            ps.close();
         } catch (SQLException e){
             closeConnection();
         }
