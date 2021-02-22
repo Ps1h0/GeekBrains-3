@@ -40,6 +40,7 @@ public class ClientHandler implements Runnable{
                 String message = in.readUTF();
                 if (message.startsWith("/")){
                     if (message.equals("/quit")){
+                        server.broadcastMessage("User " + nickName + " disconnected");
                         out.writeUTF(message);
                     }
                     if (message.equals("/time")){

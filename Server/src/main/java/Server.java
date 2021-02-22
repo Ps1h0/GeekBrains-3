@@ -12,7 +12,7 @@ public class Server {
     private final ConcurrentLinkedDeque<ClientHandler> clients;
 
 
-    public Server(int port) throws SQLException, ClassNotFoundException {
+    public Server(int port){
         dataBaseService.getConnection();
         clients = new ConcurrentLinkedDeque<>();
         try (ServerSocket server = new ServerSocket(port)) {
@@ -85,7 +85,7 @@ public class Server {
         return false;
     }
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+    public static void main(String[] args){
         int port = -1;
         if (args != null && args.length ==1){
             port = Integer.parseInt(args[0]);
