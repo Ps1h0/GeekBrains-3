@@ -1,8 +1,11 @@
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import org.apache.commons.io.input.ReversedLinesFileReader;
+
+import java.io.*;
 import java.net.Socket;
+import java.nio.charset.Charset;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientHandler implements Runnable{
 
@@ -36,6 +39,8 @@ public class ClientHandler implements Runnable{
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
             System.out.println("[DEBUG] client start processing");
+            readFromFile("Client/src/main/resources/history" + nickName + ".txt");
+            server.broadcastMessage("User " + nickName + " connected");
             while (running){
                 String message = in.readUTF();
                 if (message.startsWith("/")){
@@ -73,7 +78,32 @@ public class ClientHandler implements Runnable{
 
     public void sendMessage(String message) throws IOException {
         LocalTime time = LocalTime.now();
-        out.writeUTF("[" + time + "] " + message);
+        String msg = "[" + time + "]" + message;
+        out.writeUTF(msg);
         out.flush();
+        writeToFile(msg);
+    }
+
+    private void writeToFile(String message){
+        File file = new File("Client/src/main/resources/history" + nickName + ".txt");
+        try(BufferedWriter fw = new BufferedWriter(new FileWriter(file, true))) {
+            fw.write(message + "\n");
+            fw.flush();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    private void readFromFile(String filepath) {
+        File file = new File(filepath);
+        try(ReversedLinesFileReader reader = new ReversedLinesFileReader(file, Charset.defaultCharset())){
+            List<String> list = reader.readLines(100);
+            for (int i = list.size() - 1; i >= 0; i--){
+                out.writeUTF(list.get(i));
+                out.flush();
+            }
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
     }
 }
