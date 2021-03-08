@@ -6,13 +6,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="FourthPractice" />
+        <module name="FifthPractice" />
         <module name="Client" />
         <module name="Server" />
-        <module name="FourthPractice" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Client" target="8" />
+      <module name="FifthPractice" target="8" />
       <module name="FirstPractice" target="8" />
       <module name="FourthPractice" target="8" />
       <module name="Server" target="8" />
